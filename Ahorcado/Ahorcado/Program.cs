@@ -1,9 +1,28 @@
-﻿
-        int vidas = 6;
+﻿        int intentos = 6;
+        List<String> palabras = new List<String>();
 
-        static void Ahorcado(int vidas)
+        void HangMan()
         {
-    /*
+
+                //MostrarCabecera();
+  
+                SeleccionarPalabraAleatoria();
+
+                //while (letraIntroducida != null)
+                   //{
+
+                //}
+
+                    // while (intentos > 0)
+                    //{   
+                    //    Console.WriteLine(intentos + " 1");
+                    //    intentos--;
+                    //}     
+
+        }
+
+        void MostrarCabecera()
+        {
             Console.WriteLine("+-------------------------------------+");
             Console.WriteLine("|  +---+    -----------------         |");
             Console.WriteLine("|  |   |    JUEGO:AHORCADO            |");
@@ -12,49 +31,44 @@
             Console.WriteLine("|      |    -----------------         |");
             Console.WriteLine("|      |   PROGRAMACIÓN Y MOTORES     |");
             Console.WriteLine("+-------------------------------------+");
-
+        
             Console.WriteLine("--------------------");
-
+        
             Console.WriteLine("--------------------");
             Console.WriteLine("VIDAS RESTANTES: 6");
             Console.WriteLine("--------------------");
             Console.Write("Introduce UNA letra: ");
             string letraIntroducida = Console.ReadLine();
+}
 
-
-                while( letraIntroducida != null )
-                {
-
-                }
-    */
-                    while (vidas >= 1)
-                    {   
-                        Console.WriteLine(vidas+" 1");
-                        vidas--;
-                    }     
-
-        }
-
-        static void palabraAzar()
+        void PrecargarPalabras()
         {
-            List<String> posiblesPalabras = new List<String>();
-            posiblesPalabras.Add("Programacion");
-            posiblesPalabras.Add("Matematicas");
-            posiblesPalabras.Add("Naruto");
-            posiblesPalabras.Add("Ordenador");
-            posiblesPalabras.Add("Dragon");
-            posiblesPalabras.Add("Escorpion");
-            posiblesPalabras.Add("Nintendo");
-            posiblesPalabras.Add("Unity");
-            posiblesPalabras.Add("Tiranosaurio");
-            posiblesPalabras.Add("Videojuegos");
+            
+            palabras.Add("Programacion");
+            palabras.Add("Matematicas");
+            palabras.Add("Naruto");
+            palabras.Add("Ordenador");
+            palabras.Add("Dragon");
+            palabras.Add("Escorpion");
+            palabras.Add("Nintendo");
+            palabras.Add("Unity");
+            palabras.Add("Tiranosaurio");
+            palabras.Add("Videojuegos");
 
-            Random rand = new Random();
-            Console.WriteLine(posiblesPalabras[rand.Next(11)]);
+            
         }
 
-            Ahorcado(vidas);
-            palabraAzar();
+        String SeleccionarPalabraAleatoria()
+            {
+                PrecargarPalabras();
+                Random rand = new Random();
+                string palabra = palabras[rand.Next(10)];
+                return palabra;
+                Console.WriteLine();
+            }
+
+            HangMan();
+           
 
 
 
