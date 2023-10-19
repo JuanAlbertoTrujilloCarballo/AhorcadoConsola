@@ -1,25 +1,35 @@
-﻿        int intentos = 6;
+﻿using System.Text;
+
+int intentos = 6;
         List<String> palabras = new List<String>();
 
         void HangMan()
         {
 
-                //MostrarCabecera();
-  
-                SeleccionarPalabraAleatoria();
+    //MostrarCabecera();
 
-                //while (letraIntroducida != null)
-                   //{
+    String palabraElegida = SeleccionarPalabraAleatoria();
+    String PalabraOculta = OcultarPalabra(palabraElegida);
+    DibujarLineas(PalabraOculta);
+    SolicitarLetra();
 
-                //}
 
-                    // while (intentos > 0)
-                    //{   
-                    //    Console.WriteLine(intentos + " 1");
-                    //    intentos--;
-                    //}     
 
-        }
+
+
+
+    //while (letraIntroducida != null)
+    //{
+
+    //}
+
+    // while (intentos > 0)
+    //{   
+    //    Console.WriteLine(intentos + " 1");
+    //    intentos--;
+    //}     
+
+}
 
         void MostrarCabecera()
         {
@@ -38,7 +48,7 @@
             Console.WriteLine("VIDAS RESTANTES: 6");
             Console.WriteLine("--------------------");
             Console.Write("Introduce UNA letra: ");
-            string letraIntroducida = Console.ReadLine();
+            string letraIntroducida = Console.ReadLine() ?? "";
 }
 
         void PrecargarPalabras()
@@ -59,15 +69,76 @@
         }
 
         String SeleccionarPalabraAleatoria()
-            {
-                PrecargarPalabras();
-                Random rand = new Random();
-                string palabra = palabras[rand.Next(10)];
-                return palabra;
-                Console.WriteLine();
-            }
+        {
+            PrecargarPalabras();
+            Random rand = new Random();
+            string palabra = palabras[rand.Next(10)];
+            return palabra;
+        }
 
-            HangMan();
+String OcultarPalabra(String palabraElegida)
+{
+    char replacement = '-';
+    int i;
+    int longitudPalabra = palabraElegida.Length;
+    Console.WriteLine(palabraElegida+" 1");
+    for (i = 0; i < longitudPalabra; i++)
+    {
+
+        StringBuilder guion = new StringBuilder(palabraElegida);
+        guion[i] = replacement;
+        palabraElegida = guion.ToString();
+
+    }
+
+    return palabraElegida;
+}
+
+void DibujarLineas(String palabraOculta)
+{
+ 
+    string remplazado = palabraOculta.Replace("-", "- ");
+
+    //Console.WriteLine(remplazado);
+}
+
+int IntentosRestantes()
+{
+    return intentos;
+}
+
+char SolicitarLetra()
+{
+    bool comprobador = false;
+    String letras = null;
+
+    while (!comprobador)
+    {
+        letras = Console.ReadLine();
+        if (letras.Length == 1)
+        {
+            comprobador=true;
+        }
+        else if (letras.Length > 1)
+        {
+            Console.WriteLine("Solo debe ser una letra");
+        }
+        else
+        {
+            Console.WriteLine("Introduce una letra");
+        }
+    }
+
+
+
+
+    char letraSegura = char.Parse(letras);
+    Console.WriteLine(letraSegura);
+
+    return letraSegura;
+}
+
+HangMan();
            
 
 
