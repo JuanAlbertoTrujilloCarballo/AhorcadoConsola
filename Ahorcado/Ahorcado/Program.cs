@@ -1,18 +1,18 @@
 ﻿using System.Text;
 
 int intentos = 6;
-        List<String> palabras = new List<String>();
+        List<string> palabras = new List<string>();
 
         void HangMan()
         {
 
     //MostrarCabecera();
 
-    String palabraElegida = SeleccionarPalabraAleatoria();
-    String PalabraOculta = OcultarPalabra(palabraElegida);
+    string palabraElegida = SeleccionarPalabraAleatoria();
+    string PalabraOculta = OcultarPalabra(palabraElegida);
     DibujarLineas(PalabraOculta);
-    SolicitarLetra();
-
+    char letraElegida = SolicitarLetra();
+    ComprobarLetra(palabraElegida, letraElegida);
 
 
 
@@ -68,7 +68,7 @@ int intentos = 6;
             
         }
 
-        String SeleccionarPalabraAleatoria()
+        string SeleccionarPalabraAleatoria()
         {
             PrecargarPalabras();
             Random rand = new Random();
@@ -76,7 +76,7 @@ int intentos = 6;
             return palabra;
         }
 
-String OcultarPalabra(String palabraElegida)
+string OcultarPalabra(string palabraElegida)
 {
     char replacement = '-';
     int i;
@@ -94,7 +94,7 @@ String OcultarPalabra(String palabraElegida)
     return palabraElegida;
 }
 
-void DibujarLineas(String palabraOculta)
+void DibujarLineas(string palabraOculta)
 {
  
     string remplazado = palabraOculta.Replace("-", "- ");
@@ -110,14 +110,22 @@ int IntentosRestantes()
 char SolicitarLetra()
 {
     bool comprobador = false;
-    String letras = null;
+    string letras = null;
 
     while (!comprobador)
     {
         letras = Console.ReadLine();
         if (letras.Length == 1)
         {
-            comprobador=true;
+            if ((Char.IsLetter((char)letras[0])))
+            {
+                comprobador=true;
+            }
+            else
+            {
+                Console.WriteLine("Debe ser una letra, no otro caracter");
+            }
+
         }
         else if (letras.Length > 1)
         {
@@ -138,6 +146,26 @@ char SolicitarLetra()
     return letraSegura;
 }
 
+bool ComprobarLetra(string palabraComprobar, char letraComprobar)
+{
+    if (palabraComprobar.ToLower().Contains(letraComprobar))
+    {
+        Console.WriteLine("Va");
+        return true;
+
+    }
+    else 
+    {
+        Console.WriteLine("No Va");
+        return false; 
+    }
+}
+
+void DecrementarIntentos()
+{
+    intentos--;
+}
+
 HangMan();
            
 
@@ -149,21 +177,3 @@ HangMan();
     
 
 
-/*
-Console.WriteLine("+-------------------------------------+");
-Console.WriteLine("|  +---+    -----------------         |");
-Console.WriteLine("|  |   |    JUEGO:AHORCADO            |");
-Console.WriteLine("|      |    LENGUAJE:C#               |");
-Console.WriteLine("|      |    AUTOR: ALBERTO T.C.       |");
-Console.WriteLine("|      |    -----------------         |");
-Console.WriteLine("|      |   PROGRAMACIÓN Y MOTORES     |");
-Console.WriteLine("+-------------------------------------+");
-
-Console.WriteLine("--------------------");
-
-
-Console.WriteLine("--------------------");
-Console.WriteLine("VIDAS RESTANTES: 6");
-Console.WriteLine("--------------------");
-Console.Write("Introduce UNA letra: ");
-*/
