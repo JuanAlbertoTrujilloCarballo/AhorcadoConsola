@@ -1,6 +1,8 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 int intentos = 6;
+bool jugando = true;
         List<string> palabras = new List<string>();
 
         void HangMan()
@@ -9,11 +11,24 @@ int intentos = 6;
     //MostrarCabecera();
 
     string palabraElegida = SeleccionarPalabraAleatoria();
-    string PalabraOculta = OcultarPalabra(palabraElegida);
-    DibujarLineas(PalabraOculta);
-    char letraElegida = SolicitarLetra();
-    ComprobarLetra(palabraElegida, letraElegida);
-
+    string palabraOculta = OcultarPalabra(palabraElegida);
+    DibujarLineas(palabraOculta);
+    while (jugando)
+    {
+        if (intentos > 0)
+        {
+            char letraElegida = SolicitarLetra();
+            ComprobarLetra(palabraElegida, letraElegida);
+            palabraOculta = ReemplazarLineas(palabraElegida, palabraOculta, letraElegida);
+        }
+        else
+        {
+            Console.WriteLine("Has perdido");
+            jugando = false;
+        }
+       
+    }
+  
 
 
 
@@ -48,7 +63,6 @@ int intentos = 6;
             Console.WriteLine("VIDAS RESTANTES: 6");
             Console.WriteLine("--------------------");
             Console.Write("Introduce UNA letra: ");
-            string letraIntroducida = Console.ReadLine() ?? "";
 }
 
         void PrecargarPalabras()
@@ -81,7 +95,7 @@ string OcultarPalabra(string palabraElegida)
     char replacement = '-';
     int i;
     int longitudPalabra = palabraElegida.Length;
-    Console.WriteLine(palabraElegida+" 1");
+    Console.WriteLine(palabraElegida);
     for (i = 0; i < longitudPalabra; i++)
     {
 
@@ -141,7 +155,6 @@ char SolicitarLetra()
 
 
     char letraSegura = char.Parse(letras);
-    Console.WriteLine(letraSegura);
 
     return letraSegura;
 }
@@ -150,13 +163,10 @@ bool ComprobarLetra(string palabraComprobar, char letraComprobar)
 {
     if (palabraComprobar.ToLower().Contains(letraComprobar))
     {
-        Console.WriteLine("Va");
         return true;
-
     }
     else 
     {
-        Console.WriteLine("No Va");
         return false; 
     }
 }
@@ -164,6 +174,39 @@ bool ComprobarLetra(string palabraComprobar, char letraComprobar)
 void DecrementarIntentos()
 {
     intentos--;
+}
+
+
+String ReemplazarLineas(String palabraOriginal, String palabraOculta, char letraIntroducida)
+{
+
+    int i;
+    int longitudPalabra = palabraOriginal.Length;
+    int index = palabraOriginal.ToLower().IndexOf(letraIntroducida);
+    StringBuilder guion = new StringBuilder(palabraOculta);
+    if (index >= 0)
+    {
+        for (i = 0; i < longitudPalabra; i++)
+        {
+            if (palabraOriginal.ToLower()[i] == letraIntroducida)
+            {
+
+                guion[i] = letraIntroducida;
+                Console.WriteLine(palabraOculta);
+                palabraOculta = guion.ToString();
+            }
+        }
+        Console.WriteLine(palabraOculta);
+    }
+    else
+    {
+        DecrementarIntentos();
+        Console.WriteLine(intentos);
+    }
+    
+
+    return palabraOculta;
+
 }
 
 HangMan();
