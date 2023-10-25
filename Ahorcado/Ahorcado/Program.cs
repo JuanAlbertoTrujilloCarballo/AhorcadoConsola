@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Metrics;
 using System.Text;
 
 int intentos = 6;
@@ -8,7 +9,7 @@ bool jugando = true;
         void HangMan()
         {
 
-    //MostrarCabecera();
+    MostrarCabecera();
 
     string palabraElegida = SeleccionarPalabraAleatoria();
     string palabraOculta = OcultarPalabra(palabraElegida);
@@ -65,6 +66,28 @@ bool jugando = true;
             Console.Write("Introduce UNA letra: ");
 }
 
+        void ActualizarCabecera()
+{
+    switch (intentos)
+    {
+        case < 5:
+            Console.WriteLine($"Measured value is {intentos}; too low.");
+            break;
+
+        case >= 4:
+            Console.WriteLine($"Measured value is {intentos}; too high.");
+            break;
+
+        //case double.NaN:
+        //    Console.WriteLine("Failed measurement.");
+        //    break;
+
+        default:
+            Console.WriteLine($"Measured value is {intentos}.");
+            break;
+    }
+}
+
         void PrecargarPalabras()
         {
             
@@ -113,7 +136,6 @@ void DibujarLineas(string palabraOculta)
  
     string remplazado = palabraOculta.Replace("-", "- ");
 
-    //Console.WriteLine(remplazado);
 }
 
 int IntentosRestantes()
@@ -192,16 +214,13 @@ String ReemplazarLineas(String palabraOriginal, String palabraOculta, char letra
             {
 
                 guion[i] = letraIntroducida;
-                Console.WriteLine(palabraOculta);
                 palabraOculta = guion.ToString();
             }
         }
-        Console.WriteLine(palabraOculta);
     }
     else
     {
         DecrementarIntentos();
-        Console.WriteLine(intentos);
     }
     
 
